@@ -20,7 +20,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/sunleo/leo.h,v 1.4 2001/05/04 19:05:46 dawes Exp $ */
+/* $XFree86$ */
 
 #ifndef LEO_H
 #define LEO_H
