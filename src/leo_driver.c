@@ -55,8 +55,8 @@ static void	LeoAdjustFrame(int scrnIndex, int x, int y, int flags);
 
 /* Optional functions */
 static void	LeoFreeScreen(int scrnIndex, int flags);
-static ModeStatus LeoValidMode(int scrnIndex, DisplayModePtr mode,
-			       Bool verbose, int flags);
+static int	LeoValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose,
+			     int flags);
 
 void LeoSync(ScrnInfoPtr pScrn);
 
@@ -108,7 +108,7 @@ static XF86ModuleVersionInfo sunleoVersRec =
 	MODULEVENDORSTRING,
 	MODINFOSTRING1,
 	MODINFOSTRING2,
-	XORG_VERSION_CURRENT,
+	XF86_VERSION_CURRENT,
 	LEO_MAJOR_VERSION, LEO_MINOR_VERSION, LEO_PATCHLEVEL,
 	ABI_CLASS_VIDEODRV,
 	ABI_VIDEODRV_VERSION,
@@ -667,7 +667,7 @@ LeoFreeScreen(int scrnIndex, int flags)
 /* Checks if a mode is suitable for the selected chipset. */
 
 /* Optional */
-static ModeStatus
+static int
 LeoValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose, int flags)
 {
     if (mode->Flags & V_INTERLACE)
