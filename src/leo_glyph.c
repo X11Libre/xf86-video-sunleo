@@ -20,7 +20,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/sunleo/leo_glyph.c,v 1.1 2000/05/18 23:21:40 dawes Exp $ */
+/* $XFree86$ */
 
 #define PSZ 32
 
@@ -31,7 +31,7 @@
 #include "fontstruct.h"
 #include "dixfontstr.h"
 
-#include "cfb.h"
+#include "fb.h"
 #include "mi.h"
 
 void
@@ -51,7 +51,7 @@ LeoPolyGlyphBlt (DrawablePtr pDrawable, GCPtr pGC, int x, int y,
 	unsigned char *fb;
 	int height, width;
 
-	clip = cfbGetCompositeClip(pGC);
+	clip = fbGetCompositeClip(pGC);
 	/* compute an approximate (but covering) bounding box */
 	box.x1 = 0;
 	if (ppci[0]->metrics.leftSideBearing < 0)
@@ -76,7 +76,7 @@ LeoPolyGlyphBlt (DrawablePtr pDrawable, GCPtr pGC, int x, int y,
 			ld0->vclipmax = ((clip->extents.y2 - 1) << 16) | (clip->extents.x2 - 1);
 			break;
 		}
-		cfbPolyGlyphBlt8 (pDrawable, pGC, x, y, nglyph, ppci, pGlyphBase);
+		fbPolyGlyphBlt (pDrawable, pGC, x, y, nglyph, ppci, pGlyphBase);
 	case rgnOUT:
 		return;
 	default:
@@ -178,7 +178,7 @@ LeoTEGlyphBlt (DrawablePtr pDrawable, GCPtr pGC, int x, int y,
 
 	widthGlyph = FONTMAXBOUNDS(pfont,characterWidth);
 	h = FONTASCENT(pfont) + FONTDESCENT(pfont);
-	clip = cfbGetCompositeClip(pGC);
+	clip = fbGetCompositeClip(pGC);
 	bbox.x1 = x + pDrawable->x;
 	bbox.x2 = bbox.x1 + (widthGlyph * nglyph);
 	bbox.y1 = y + pDrawable->y - FONTASCENT(pfont);
@@ -205,7 +205,7 @@ LeoTEGlyphBlt (DrawablePtr pDrawable, GCPtr pGC, int x, int y,
 		x -= pDrawable->x;
 		y = y - pDrawable->y + FONTASCENT(pfont);
 		if (pGlyphBase)
-			cfbPolyGlyphBlt8 (pDrawable, pGC, x, y, nglyph, ppci, NULL);
+			fbPolyGlyphBlt (pDrawable, pGC, x, y, nglyph, ppci, NULL);
 		else
 			miImageGlyphBlt(pDrawable, pGC, x, y, nglyph, ppci, pGlyphBase);
 	case rgnOUT:

@@ -20,7 +20,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-/* $XFree86: xc/programs/Xserver/hw/xfree86/drivers/sunleo/leo_fspans.c,v 1.1 2000/05/18 23:21:40 dawes Exp $ */
+/* $XFree86$ */
 
 #define PSZ 32
 
@@ -29,7 +29,7 @@
 #include "pixmapstr.h"
 #include "scrnintstr.h"
 
-#include "cfb.h"
+#include "fb.h"
 #include "mi.h"
 #include "mispans.h"
 
@@ -48,7 +48,7 @@ LeoFillSpansSolid (DrawablePtr pDrawable, GCPtr pGC,
 	int fg;
 	int cx1 = 0, cy1 = 0, cx2 = 0, cy2 = 0;
 
-	clip = cfbGetCompositeClip(pGC);
+	clip = fbGetCompositeClip(pGC);
 	numRects = REGION_NUM_RECTS(clip);
 	
 	if (!numRects)

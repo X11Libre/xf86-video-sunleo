@@ -31,9 +31,7 @@
 #include "mibstore.h"
 #include "micmap.h"
 
-#define PSZ 32
-#include "cfb.h"
-#undef PSZ
+#include "fb.h"
 #include "xf86cmap.h"
 #include "leo.h"
 
@@ -55,8 +53,8 @@ static void	LeoAdjustFrame(int scrnIndex, int x, int y, int flags);
 
 /* Optional functions */
 static void	LeoFreeScreen(int scrnIndex, int flags);
-static int	LeoValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose,
-			     int flags);
+static ModeStatus LeoValidMode(int scrnIndex, DisplayModePtr mode,
+			       Bool verbose, int flags);
 
 void LeoSync(ScrnInfoPtr pScrn);
 
@@ -108,7 +106,7 @@ static XF86ModuleVersionInfo sunleoVersRec =
 	MODULEVENDORSTRING,
 	MODINFOSTRING1,
 	MODINFOSTRING2,
-	XF86_VERSION_CURRENT,
+	XORG_VERSION_CURRENT,
 	LEO_MAJOR_VERSION, LEO_MINOR_VERSION, LEO_PATCHLEVEL,
 	ABI_CLASS_VIDEODRV,
 	ABI_VIDEODRV_VERSION,
@@ -414,7 +412,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
 	xf86DrvMsg(pScrn->scrnIndex, X_CONFIG, "Acceleration disabled\n");
     }
         
-    if (xf86LoadSubModule(pScrn, "cfb32") == NULL) {
+    if (xf86LoadSubModule(pScrn, "fb") == NULL) {
 	LeoFreeRec(pScrn);
 	return FALSE;
     }
@@ -502,9 +500,9 @@ LeoScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
      * pScreen fields.
      */
 
-    ret = cfb32ScreenInit(pScreen, pLeo->fb, pScrn->virtualX,
-			  pScrn->virtualY, pScrn->xDpi, pScrn->yDpi,
-			  2048);
+    ret = fbScreenInit(pScreen, pLeo->fb, pScrn->virtualX,
+		       pScrn->virtualY, pScrn->xDpi, pScrn->yDpi,
+		       2048, pScrn->bitsPerPixel);
     if (!ret)
 	return FALSE;
 
@@ -667,7 +665,7 @@ LeoFreeScreen(int scrnIndex, int flags)
 /* Checks if a mode is suitable for the selected chipset. */
 
 /* Optional */
-static int
+static ModeStatus
 LeoValidMode(int scrnIndex, DisplayModePtr mode, Bool verbose, int flags)
 {
     if (mode->Flags & V_INTERLACE)
