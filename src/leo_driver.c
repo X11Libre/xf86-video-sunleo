@@ -73,7 +73,7 @@ void LeoSync(ScrnInfoPtr pScrn);
  * an upper-case version of the driver name.
  */
 
-DriverRec SUNLEO = {
+_X_EXPORT DriverRec SUNLEO = {
     VERSION,
     LEO_DRIVER_NAME,
     LeoIdentify,
@@ -114,7 +114,7 @@ static XF86ModuleVersionInfo sunleoVersRec =
 	{0,0,0,0}
 };
 
-XF86ModuleData sunleoModuleData = { &sunleoVersRec, leoSetup, NULL };
+_X_EXPORT XF86ModuleData sunleoModuleData = { &sunleoVersRec, leoSetup, NULL };
 
 pointer
 leoSetup(pointer module, pointer opts, int *errmaj, int *errmin)
