@@ -28,7 +28,7 @@
 
 #include "pixmapstr.h"
 #include "scrnintstr.h"
-#include "fontstruct.h"
+#include <X11/fonts/fontstruct.h>
 #include "dixfontstr.h"
 
 #include "fb.h"
