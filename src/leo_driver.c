@@ -66,9 +66,9 @@ void LeoSync(ScrnInfoPtr pScrn);
 #define LEO_VERSION 4000
 #define LEO_NAME "SUNLEO"
 #define LEO_DRIVER_NAME "sunleo"
-#define LEO_MAJOR_VERSION 1
-#define LEO_MINOR_VERSION 1
-#define LEO_PATCHLEVEL 0
+#define LEO_MAJOR_VERSION PACKAGE_VERSION_MAJOR
+#define LEO_MINOR_VERSION PACKAGE_VERSION_MINOR
+#define LEO_PATCHLEVEL PACKAGE_VERSION_PATCHLEVEL
 
 /* 
  * This contains the functions needed by the server after loading the driver
