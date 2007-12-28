@@ -42,7 +42,9 @@ LeoFillSpansSolid (DrawablePtr pDrawable, GCPtr pGC,
 		   int n, DDXPointPtr ppt,
 		   int *pwidth, int fSorted)
 {
-	LeoPtr pLeo = LeoGetScreenPrivate (pGC->pScreen);
+	ScreenPtr pScreen = pDrawable->pScreen;
+	ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+	LeoPtr pLeo = GET_LEO_FROM_SCRN(pScrn);
 	LeoCommand0 *lc0 = pLeo->lc0;
 	LeoDraw *ld0 = pLeo->ld0;
 	int numRects, *pwidthFree;

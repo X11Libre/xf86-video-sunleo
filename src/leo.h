@@ -84,23 +84,12 @@ typedef struct {
 	OptionInfoPtr	Options;
 } LeoRec, *LeoPtr;
 
-extern int  LeoScreenPrivateIndex;
-extern int  LeoGCPrivateIndex;
-extern int  LeoWindowPrivateIndex;
+extern DevPrivateKey LeoGCPrivateKey;
 
 #define GET_LEO_FROM_SCRN(p)    ((LeoPtr)((p)->driverPrivate))
 
-#define LeoGetScreenPrivate(s)						\
-((LeoPtr) (s)->devPrivates[LeoScreenPrivateIndex].ptr)
-
 #define LeoGetGCPrivate(g)						\
-((LeoPrivGCPtr) (g)->devPrivates [LeoGCPrivateIndex].ptr)
-
-#define LeoGetWindowPrivate(w)						\
-((LeoStipplePtr) (w)->devPrivates[LeoWindowPrivateIndex].ptr)
-                            
-#define LeoSetWindowPrivate(w,p) 					\
-((w)->devPrivates[LeoWindowPrivateIndex].ptr = (pointer) p)
+	((LeoPrivGCPtr) dixLookupPrivate(&(g)->devPrivates, LeoGCPrivateKey))
 
 extern int leoRopTable[];
 

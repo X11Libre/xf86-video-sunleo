@@ -42,9 +42,7 @@
 
 #include	"leo.h"
 
-int	LeoScreenPrivateIndex;
-int	LeoGCPrivateIndex;
-int	LeoWindowPrivateIndex;
+DevPrivateKey LeoGCPrivateKey;
 int	LeoGeneration;
 
 int	leoRopTable[16] = {
@@ -68,7 +66,8 @@ int	leoRopTable[16] = {
 
 void LeoVtChange (ScreenPtr pScreen, int enter)
 {
-	LeoPtr pLeo = LeoGetScreenPrivate (pScreen); 
+	ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+	LeoPtr pLeo = GET_LEO_FROM_SCRN (pScrn); 
 	LeoCommand0 *lc0 = pLeo->lc0;
 	LeoDraw *ld0 = pLeo->ld0;
 
@@ -100,19 +99,12 @@ Bool LeoAccelInit (ScreenPtr pScreen, LeoPtr pLeo)
 	LeoDraw *ld0;
 
 	if (serverGeneration != LeoGeneration) {
-		LeoScreenPrivateIndex = AllocateScreenPrivateIndex ();
-		if (LeoScreenPrivateIndex == -1) return FALSE;
-		LeoGCPrivateIndex = AllocateGCPrivateIndex ();
-		LeoWindowPrivateIndex = AllocateWindowPrivateIndex ();
+		if (!dixRequestPrivate(LeoGCPrivateKey,
+				       sizeof(LeoPrivGCRec)))
+			return FALSE;
 		LeoGeneration = serverGeneration;
 	}
 	
-	/* Allocate private structures holding pointer to both videoRAM and control registers.
-	   We do not have to map these by ourselves, because the XServer did it for us; we
-	   only copy the pointers to out structures. */
-	if (!AllocateGCPrivate(pScreen, LeoGCPrivateIndex, sizeof(LeoPrivGCRec))) return FALSE;
-	if (!AllocateWindowPrivate(pScreen, LeoWindowPrivateIndex, 0)) return FALSE;
-	pScreen->devPrivates[LeoScreenPrivateIndex].ptr = pLeo;
 	pLeo->lc0 = lc0 = (LeoCommand0 *) ((char *)pLeo->fb + LEO_LC0_VOFF);
 	pLeo->ld0 = ld0 = (LeoDraw *) ((char *)pLeo->fb + LEO_LD0_VOFF);
 
