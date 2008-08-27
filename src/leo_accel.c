@@ -42,11 +42,7 @@
 
 #include	"leo.h"
 
-#if LEO_OLDPRIV
 int LeoGCPrivateIndex;
-#else
-DevPrivateKey LeoGCPrivateKey = &LeoGCPrivateKey;
-#endif
 
 int	leoRopTable[16] = {
 	LEO_ATTR_RGBE_ENABLE|LEO_ROP_ZERO,		/* GXclear */
@@ -110,7 +106,7 @@ Bool LeoAccelInit (ScreenPtr pScreen, LeoPtr pLeo)
 	if (!AllocateGCPrivate(pScreen, LeoGCPrivateIndex, sizeof(LeoPrivGCRec)))
 		return FALSE;
 #else
-	if (!dixRequestPrivate(LeoGCPrivateKey, sizeof(LeoPrivGCRec)))
+	if (!dixRequestPrivate(&LeoGCPrivateIndex, sizeof(LeoPrivGCRec)))
 		return FALSE;
 #endif
 	
