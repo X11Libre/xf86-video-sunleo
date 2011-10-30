@@ -171,7 +171,7 @@ LeoFreeRec(ScrnInfoPtr pScrn)
 
     pLeo = GET_LEO_FROM_SCRN(pScrn);
 
-    xfree(pScrn->driverPrivate);
+    free(pScrn->driverPrivate);
     pScrn->driverPrivate = NULL;
 
     return;
@@ -241,7 +241,7 @@ LeoProbe(DriverPtr drv, int flags)
 		   devSections, numDevSections,
 		   drv, &usedChips);
 				    
-    xfree(devSections);
+    free(devSections);
     if (numUsed <= 0)
 	return FALSE;
 
@@ -275,9 +275,9 @@ LeoProbe(DriverPtr drv, int flags)
 	    xf86AddEntityToScreen(pScrn, pEnt->index);
 	    foundScreen = TRUE;
 	}
-	xfree(pEnt);
+	free(pEnt);
     }
-    xfree(usedChips);
+    free(usedChips);
     return foundScreen;
 }
 
@@ -352,7 +352,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
     /* Collect all of the relevant option flags (fill in pScrn->options) */
     xf86CollectOptions(pScrn, NULL);
     /* Process the options */
-    if (!(pLeo->Options = xalloc(sizeof(LeoOptions))))
+    if (!(pLeo->Options = malloc(sizeof(LeoOptions))))
 	return FALSE;
     memcpy(pLeo->Options, LeoOptions, sizeof(LeoOptions));
     xf86ProcessOptions(pScrn->scrnIndex, pScrn->options, pLeo->Options);

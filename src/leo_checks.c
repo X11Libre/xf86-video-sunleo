@@ -137,14 +137,14 @@ LeoCheckFill (GCPtr pGC, DrawablePtr pDrawable)
 
 	if (pGC->fillStyle == FillSolid) {
 		if (gcPriv->stipple) {
-			xfree (gcPriv->stipple);
+			free (gcPriv->stipple);
 			gcPriv->stipple = 0;
 		}
 		return TRUE;
 	}
 	if (!(stipple = gcPriv->stipple)) {
 		if (!pLeo->tmpStipple) {
-			pLeo->tmpStipple = (LeoStipplePtr) xalloc (sizeof *pLeo->tmpStipple);
+			pLeo->tmpStipple = (LeoStipplePtr) malloc (sizeof *pLeo->tmpStipple);
 			if (!pLeo->tmpStipple)
 				return FALSE;
 		}
@@ -157,7 +157,7 @@ LeoCheckFill (GCPtr pGC, DrawablePtr pDrawable)
 	case FillTiled:
 		if (!LeoCheckTile (pGC->tile.pixmap, stipple, xrot, yrot)) {
 			if (gcPriv->stipple) {
-				xfree (gcPriv->stipple);
+				free (gcPriv->stipple);
 				gcPriv->stipple = 0;
 			}
 			return FALSE;
@@ -168,7 +168,7 @@ LeoCheckFill (GCPtr pGC, DrawablePtr pDrawable)
 	case FillOpaqueStippled:
 		if (!LeoCheckStipple (pGC->stipple, stipple, xrot, yrot)) {
 			if (gcPriv->stipple) {
-				xfree (gcPriv->stipple);
+				free (gcPriv->stipple);
 				gcPriv->stipple = 0;
 			}
 			return FALSE;

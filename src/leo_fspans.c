@@ -67,11 +67,11 @@ LeoFillSpansSolid (DrawablePtr pDrawable, GCPtr pGC,
 	} else {
 		int nTmp = n * miFindMaxBand(clip);
 
-		pwidthFree = (int *)xalloc(nTmp * sizeof(int));
-		pptFree = (DDXPointRec *)xalloc(nTmp * sizeof(DDXPointRec));
+		pwidthFree = (int *)malloc(nTmp * sizeof(int));
+		pptFree = (DDXPointRec *)malloc(nTmp * sizeof(DDXPointRec));
 		if (!pptFree || !pwidthFree) {
-			if (pptFree) xfree(pptFree);
-			if (pwidthFree) xfree(pwidthFree);
+			if (pptFree) free(pptFree);
+			if (pwidthFree) free(pwidthFree);
 			return;
 		}
 		n = miClipSpans(clip,
@@ -122,8 +122,8 @@ LeoFillSpansSolid (DrawablePtr pDrawable, GCPtr pGC,
 	}
 	
 	if (numRects != 1) {
-		xfree(pptFree);
-		xfree(pwidthFree);
+		free(pptFree);
+		free(pwidthFree);
 	}
 	if (pGC->alu != GXcopy)
 		ld0->rop = LEO_ATTR_RGBE_ENABLE|LEO_ROP_NEW;
