@@ -68,7 +68,7 @@ int	leoRopTable[16] = {
 
 void LeoVtChange (ScreenPtr pScreen, int enter)
 {
-	ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+	ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
 	LeoPtr pLeo = GET_LEO_FROM_SCRN (pScrn); 
 	LeoCommand0 *lc0 = pLeo->lc0;
 	LeoDraw *ld0 = pLeo->ld0;

@@ -125,7 +125,7 @@ LeoSetCursorColors(ScrnInfoPtr pScrn, int bg, int fg)
 Bool 
 LeoHWCursorInit(ScreenPtr pScreen)
 {
-    ScrnInfoPtr pScrn = xf86Screens[pScreen->myNum];
+    ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     LeoPtr pLeo;
     xf86CursorInfoPtr infoPtr;
 

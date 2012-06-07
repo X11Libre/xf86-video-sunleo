@@ -29,6 +29,7 @@ sunleo_drv_la_LDFLAGS = -module -avoid-version
 sunleo_drv_ladir = @moduledir@/drivers
 
 sunleo_drv_la_SOURCES = \
+         compat-api.h \
          leo_accel.c \
          leo_cursor.c \
          leo_driver.c \
