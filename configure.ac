@@ -23,8 +23,8 @@
 # Initialize Autoconf
 AC_PREREQ([2.60])
 AC_INIT([xf86-video-sunleo],
-        [1.2.2],
-        [https://gitlab.freedesktop.org/xorg/driver/xf86-video-sunleo/issues],
+        [1.2.3],
+        [https://gitlab.freedesktop.org/xorg/driver/xf86-video-sunleo/-/issues],
         [xf86-video-sunleo])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
