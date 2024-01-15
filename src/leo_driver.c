@@ -162,12 +162,8 @@ LeoGetRec(ScrnInfoPtr pScrn)
 static void
 LeoFreeRec(ScrnInfoPtr pScrn)
 {
-    LeoPtr pLeo;
-
     if (pScrn->driverPrivate == NULL)
 	return;
-
-    pLeo = GET_LEO_FROM_SCRN(pScrn);
 
     free(pScrn->driverPrivate);
     pScrn->driverPrivate = NULL;
