@@ -101,4 +101,11 @@ extern int LeoGCPrivateIndex;
 
 extern int leoRopTable[];
 
+/* leo_accel.c */
+extern Bool LeoAccelInit(ScreenPtr pScreen, LeoPtr pLeo);
+extern void LeoVtChange (ScreenPtr pScreen, int enter);
+
+/* leo_cursor.c */
+extern Bool LeoHWCursorInit(ScreenPtr pScreen);
+
 #endif /* LEO_H */

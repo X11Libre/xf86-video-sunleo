@@ -457,7 +457,6 @@ LeoScreenInit(SCREEN_INIT_ARGS_DECL)
     LeoPtr pLeo;
     int ret;
     VisualPtr visual;
-    extern Bool LeoAccelInit(ScreenPtr pScreen, LeoPtr pLeo);
 
     /* 
      * First get the ScrnInfoRec
@@ -539,7 +538,6 @@ LeoScreenInit(SCREEN_INIT_ARGS_DECL)
     /* Initialize HW cursor layer. 
        Must follow software cursor initialization*/
     if (pLeo->HWCursor) { 
-	extern Bool LeoHWCursorInit(ScreenPtr pScreen);
 
 	if(!LeoHWCursorInit(pScreen)) {
 	    xf86DrvMsg(pScrn->scrnIndex, X_ERROR, 
@@ -589,8 +587,6 @@ LeoAdjustFrame(ADJUST_FRAME_ARGS_DECL)
     /* we don't support virtual desktops */
     return;
 }
-
-extern void LeoVtChange (ScreenPtr pScreen, int enter);
 
 /*
  * This is called when VT switching back to the X server.  Its job is
