@@ -650,7 +650,7 @@ LeoCloseScreen(CLOSE_SCREEN_ARGS_DECL)
 static void
 LeoFreeScreen(FREE_SCREEN_ARGS_DECL)
 {
-    SCRN_INFO_PTR(pScrn);
+    SCRN_INFO_PTR(arg);
     LeoFreeRec(pScrn);
 }
 
