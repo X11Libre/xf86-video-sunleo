@@ -155,7 +155,7 @@ LeoGetRec(ScrnInfoPtr pScrn)
     if (pScrn->driverPrivate != NULL)
 	return TRUE;
 
-    pScrn->driverPrivate = xnfcalloc(sizeof(LeoRec), 1);
+    pScrn->driverPrivate = XNFcallocarray(sizeof(LeoRec), 1);
     return TRUE;
 }
 
