@@ -38,11 +38,7 @@
 
 #include	"leo.h"
 
-#if HAS_DEVPRIVATEKEYREC
 DevPrivateKeyRec LeoGCPrivateIndex;
-#else
-int LeoGCPrivateIndex;
-#endif
 
 int	leoRopTable[16] = {
 	LEO_ATTR_RGBE_ENABLE|LEO_ROP_ZERO,		/* GXclear */
@@ -97,21 +93,8 @@ Bool LeoAccelInit (ScreenPtr pScreen, LeoPtr pLeo)
 	LeoCommand0 *lc0;
 	LeoDraw *ld0;
 
-#if LEO_OLDPRIV
-	static int LeoGeneration;
-	if (serverGeneration != LeoGeneration) {
-		LeoGCPrivateIndex = AllocateGCPrivateIndex();
-		LeoGeneration = serverGeneration;
-	}
-	if (!AllocateGCPrivate(pScreen, LeoGCPrivateIndex, sizeof(LeoPrivGCRec)))
-		return FALSE;
-#elif HAS_DIXREGISTERPRIVATEKEY
         if (!dixRegisterPrivateKey(&LeoGCPrivateIndex, PRIVATE_GC, sizeof(LeoPrivGCRec)))
 		return FALSE;
-#else
-	if (!dixRequestPrivate(&LeoGCPrivateIndex, sizeof(LeoPrivGCRec)))
-		return FALSE;
-#endif
 
 	pLeo->lc0 = lc0 = (LeoCommand0 *) ((char *)pLeo->fb + LEO_LC0_VOFF);
 	pLeo->ld0 = ld0 = (LeoDraw *) ((char *)pLeo->fb + LEO_LD0_VOFF);
