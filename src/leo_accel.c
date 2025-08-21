@@ -62,7 +62,7 @@ int	leoRopTable[16] = {
 void LeoVtChange (ScreenPtr pScreen, int enter)
 {
 	ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
-	LeoPtr pLeo = GET_LEO_FROM_SCRN (pScrn); 
+	LeoPtr pLeo = GET_LEO_FROM_SCRN (pScrn);
 	LeoCommand0 *lc0 = pLeo->lc0;
 	LeoDraw *ld0 = pLeo->ld0;
 
@@ -74,14 +74,14 @@ void LeoVtChange (ScreenPtr pScreen, int enter)
 	ld0->fg = 0;
 	ld0->vclipmin = 0;
 	ld0->vclipmax = (pLeo->psdp->width - 1) | ((pLeo->psdp->height - 1) << 16);
-	
+
 	while (lc0->csr & LEO_CSR_BLT_BUSY);
-	
+
 	lc0->extent = (pLeo->psdp->width - 1) | ((pLeo->psdp->height - 1) << 11);
 	lc0->fill = 0;
-	
+
 	while (lc0->csr & LEO_CSR_BLT_BUSY);
-	
+
 	lc0->addrspace = LEO_ADDRSPC_OBGR;
 	ld0->rop = LEO_ATTR_RGBE_ENABLE|LEO_ROP_NEW;
 }
@@ -115,14 +115,14 @@ Bool LeoAccelInit (ScreenPtr pScreen, LeoPtr pLeo)
 	pLeo->vclipmax = (pLeo->psdp->width - 1) | ((pLeo->psdp->height - 1) << 16);
 	pLeo->width = pLeo->psdp->width;
 	pLeo->height = pLeo->psdp->height;
-	
+
 	while (lc0->csr & LEO_CSR_BLT_BUSY);
-	
+
 	lc0->extent = (pLeo->psdp->width - 1) | ((pLeo->psdp->height - 1) << 11);
 	lc0->fill = 0;
-	
+
 	while (lc0->csr & LEO_CSR_BLT_BUSY);
-	
+
 	lc0->addrspace = LEO_ADDRSPC_OBGR;
 	ld0->rop = LEO_ATTR_RGBE_ENABLE|LEO_ROP_NEW;
 

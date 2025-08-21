@@ -62,7 +62,7 @@ LeoLoadCursorImage(ScrnInfoPtr pScrn, unsigned char *src)
     }
 }
 
-static void 
+static void
 LeoShowCursor(ScrnInfoPtr pScrn)
 {
     LeoPtr pLeo = GET_LEO_FROM_SCRN(pScrn);
@@ -105,7 +105,7 @@ LeoSetCursorPosition(ScrnInfoPtr pScrn, int x, int y)
 	pLeo->CursorShiftY = CursorShiftY;
 	LeoLoadCursorImage(pScrn, pLeo->CursorData);
     }
-	
+
     pLeo->dac->cur_cursxy = ((y & 0x7ff) << 11) | (x & 0x7ff);
     pLeo->dac->cur_misc |= 0x30;
     pLeo->dac->cur_misc |= 0x80;
@@ -122,7 +122,7 @@ LeoSetCursorColors(ScrnInfoPtr pScrn, int bg, int fg)
     pLeo->dac->cur_misc |= 0x03;
 }
 
-Bool 
+Bool
 LeoHWCursorInit(ScreenPtr pScreen)
 {
     ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
@@ -136,7 +136,7 @@ LeoHWCursorInit(ScreenPtr pScreen)
 
     infoPtr = xf86CreateCursorInfoRec();
     if(!infoPtr) return FALSE;
-    
+
     pLeo->CursorInfoRec = infoPtr;
     pLeo->dac = (LeoCursor *)((char *)pLeo->fb + LEO_LX0_CURSOR_VOFF);
 
