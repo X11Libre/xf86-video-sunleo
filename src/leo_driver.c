@@ -66,7 +66,7 @@ void LeoSync(ScrnInfoPtr pScrn);
 #define LEO_MINOR_VERSION PACKAGE_VERSION_MINOR
 #define LEO_PATCHLEVEL PACKAGE_VERSION_PATCHLEVEL
 
-/* 
+/*
  * This contains the functions needed by the server after loading the driver
  * module.  It must be supplied, and gets passed back by the SetupProc
  * function in the dynamic case.  In the static case, a reference to this
@@ -234,7 +234,7 @@ LeoProbe(DriverPtr drv, int flags)
     numUsed = xf86MatchSbusInstances(LEO_NAME, SBUS_DEVICE_LEO,
 		   devSections, numDevSections,
 		   drv, &usedChips);
-				    
+
     free(devSections);
     if (numUsed <= 0)
 	return FALSE;
@@ -249,7 +249,7 @@ LeoProbe(DriverPtr drv, int flags)
 	 */
 	if(pEnt->active) {
 	    ScrnInfoPtr pScrn;
-	    
+
 	    /* Allocate a ScrnInfoRec and claim the slot */
 	    pScrn = xf86AllocateScreen(drv, 0);
 
@@ -291,7 +291,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
      * not at the start of each server generation.  This means that
      * only things that are persistent across server generations can
      * be initialised here.  xf86Screens[] is (pScrn is a pointer to one
-     * of these).  Privates allocated using xf86AllocateScrnInfoPrivateIndex()  
+     * of these).  Privates allocated using xf86AllocateScrnInfoPrivateIndex()
      * are too, and should be used for data that must persist across
      * server generations.
      *
@@ -304,7 +304,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
 	return FALSE;
     }
     pLeo = GET_LEO_FROM_SCRN(pScrn);
-    
+
     /* Set pScrn->monitor */
     pScrn->monitor = pScrn->confScreen->monitor;
 
@@ -326,7 +326,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
     /*********************
     deal with depth
     *********************/
-    
+
     if (!xf86SetDepthBpp(pScrn, 32, 0, 32, Support32bppFb)) {
 	return FALSE;
     } else {
@@ -350,7 +350,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
 	return FALSE;
     memcpy(pLeo->Options, LeoOptions, sizeof(LeoOptions));
     xf86ProcessOptions(pScrn->scrnIndex, pScrn->options, pLeo->Options);
-    
+
     /*
      * This must happen after pScrn->display has been set because
      * xf86SetWeight references it.
@@ -392,7 +392,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
     from = X_DEFAULT;
 
     /* determine whether we use hardware or software cursor */
-    
+
     pLeo->HWCursor = TRUE;
     if (xf86GetOptValBool(pLeo->Options, OPTION_HW_CURSOR, &pLeo->HWCursor))
 	from = X_CONFIG;
@@ -400,7 +400,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
 	from = X_CONFIG;
 	pLeo->HWCursor = FALSE;
     }
-    
+
     xf86DrvMsg(pScrn->scrnIndex, from, "Using %s cursor\n",
 		pLeo->HWCursor ? "HW" : "SW");
 
@@ -408,7 +408,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
 	pLeo->NoAccel = TRUE;
 	xf86DrvMsg(pScrn->scrnIndex, X_CONFIG, "Acceleration disabled\n");
     }
-        
+
     if (xf86LoadSubModule(pScrn, "fb") == NULL) {
 	LeoFreeRec(pScrn);
 	return FALSE;
@@ -422,7 +422,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
     /*********************
     set up clock and mode stuff
     *********************/
-    
+
     pScrn->progClock = TRUE;
 
     if(pScrn->display->virtualX || pScrn->display->virtualY) {
@@ -454,7 +454,7 @@ LeoScreenInit(SCREEN_INIT_ARGS_DECL)
     int ret;
     VisualPtr visual;
 
-    /* 
+    /*
      * First get the ScrnInfoRec
      */
     pScrn = xf86ScreenToScrn(pScreen);
@@ -531,12 +531,12 @@ LeoScreenInit(SCREEN_INIT_ARGS_DECL)
     /* Initialise cursor functions */
     miDCInitialize (pScreen, xf86GetPointerScreenFuncs());
 
-    /* Initialize HW cursor layer. 
+    /* Initialize HW cursor layer.
        Must follow software cursor initialization*/
-    if (pLeo->HWCursor) { 
+    if (pLeo->HWCursor) {
 
 	if(!LeoHWCursorInit(pScreen)) {
-	    xf86DrvMsg(pScrn->scrnIndex, X_ERROR, 
+	    xf86DrvMsg(pScrn->scrnIndex, X_ERROR,
 		       "Hardware cursor initialization failed\n");
 	    return(FALSE);
 	}
@@ -577,7 +577,7 @@ LeoSwitchMode(SWITCH_MODE_ARGS_DECL)
  * displayed location in the video memory.
  */
 /* Usually mandatory */
-static void 
+static void
 LeoAdjustFrame(ADJUST_FRAME_ARGS_DECL)
 {
     /* we don't support virtual desktops */
