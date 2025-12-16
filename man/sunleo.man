@@ -21,7 +21,7 @@ sunleo \- Leo video driver
 .fi
 .SH DESCRIPTION
 .B leo
-is an Xorg driver for Sun Leo (ZX) video cards.
+is an XLibre driver for Sun Leo (ZX) video cards.
 .PP
 Also known as the ZX or T(urbo)ZX, Leo is a 24 bit accelerated 3D
 graphics card.
@@ -60,7 +60,7 @@ Please refer to
 for general configuration details.
 This section only covers configuration details specific to this driver.
 .SH "SEE ALSO"
-.BR Xorg (1),
+.BR XLibre (1),
 .BR Xserver (1),
 .BR xorg.conf (5),
 .BR X (7)
