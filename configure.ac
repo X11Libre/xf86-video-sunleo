@@ -23,7 +23,7 @@
 # Initialize Autoconf
 AC_PREREQ([2.60])
 AC_INIT([xlibre-xf86-video-sunleo],
-        [1.2.3],
+        [25.0.0],
         [https://github.com/X11Libre/xf86-video-sunleo/issues],
         [xlibre-xf86-video-sunleo])
 AC_CONFIG_SRCDIR([Makefile.am])
