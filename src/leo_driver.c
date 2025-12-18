@@ -94,8 +94,6 @@ static const OptionInfoRec LeoOptions[] = {
     { -1,			NULL,		OPTV_NONE,	{0}, FALSE }
 };
 
-#ifdef XFree86LOADER
-
 static MODULESETUPPROTO(leoSetup);
 
 static XF86ModuleVersionInfo sunleoVersRec =
@@ -138,8 +136,6 @@ leoSetup(pointer module, pointer opts, int *errmaj, int *errmin)
 	return NULL;
     }
 }
-
-#endif /* XFree86LOADER */
 
 static Bool
 LeoGetRec(ScrnInfoPtr pScrn)
