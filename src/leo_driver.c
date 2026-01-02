@@ -38,20 +38,20 @@ static const OptionInfoRec * LeoAvailableOptions(int chipid, int busid);
 static void	LeoIdentify(int flags);
 static Bool	LeoProbe(DriverPtr drv, int flags);
 static Bool	LeoPreInit(ScrnInfoPtr pScrn, int flags);
-static Bool	LeoScreenInit(SCREEN_INIT_ARGS_DECL);
-static Bool	LeoEnterVT(VT_FUNC_ARGS_DECL);
-static void	LeoLeaveVT(VT_FUNC_ARGS_DECL);
-static Bool	LeoCloseScreen(CLOSE_SCREEN_ARGS_DECL);
+static Bool	LeoScreenInit(ScreenPtr pScreen, int argc, char **argv);
+static Bool	LeoEnterVT(ScrnInfoPtr arg);
+static void	LeoLeaveVT(ScrnInfoPtr arg);
+static Bool	LeoCloseScreen(ScreenPtr pScreen);
 static Bool	LeoSaveScreen(ScreenPtr pScreen, int mode);
 
 /* Required if the driver supports mode switching */
-static Bool	LeoSwitchMode(SWITCH_MODE_ARGS_DECL);
+static Bool	LeoSwitchMode(ScrnInfoPtr arg, DisplayModePtr mode);
 /* Required if the driver supports moving the viewport */
-static void	LeoAdjustFrame(ADJUST_FRAME_ARGS_DECL);
+static void	LeoAdjustFrame(ScrnInfoPtr arg, int x, int y);
 
 /* Optional functions */
-static void	LeoFreeScreen(FREE_SCREEN_ARGS_DECL);
-static ModeStatus LeoValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode,
+static void	LeoFreeScreen(ScrnInfoPtr arg);
+static ModeStatus LeoValidMode(ScrnInfoPtr arg, DisplayModePtr mode,
 			       Bool verbose, int flags);
 
 void LeoSync(ScrnInfoPtr pScrn);
@@ -440,7 +440,7 @@ LeoPreInit(ScrnInfoPtr pScrn, int flags)
 /* This gets called at the start of each server generation */
 
 static Bool
-LeoScreenInit(SCREEN_INIT_ARGS_DECL)
+LeoScreenInit(ScreenPtr pScreen, int argc, char **argv)
 {
     ScrnInfoPtr pScrn;
     LeoPtr pLeo;
@@ -559,7 +559,7 @@ LeoScreenInit(SCREEN_INIT_ARGS_DECL)
 
 /* Usually mandatory */
 static Bool
-LeoSwitchMode(SWITCH_MODE_ARGS_DECL)
+LeoSwitchMode(ScrnInfoPtr arg, DisplayModePtr mode)
 {
     return TRUE;
 }
@@ -571,7 +571,7 @@ LeoSwitchMode(SWITCH_MODE_ARGS_DECL)
  */
 /* Usually mandatory */
 static void
-LeoAdjustFrame(ADJUST_FRAME_ARGS_DECL)
+LeoAdjustFrame(ScrnInfoPtr arg, int x, int y)
 {
     /* we don't support virtual desktops */
     return;
@@ -584,9 +584,8 @@ LeoAdjustFrame(ADJUST_FRAME_ARGS_DECL)
 
 /* Mandatory */
 static Bool
-LeoEnterVT(VT_FUNC_ARGS_DECL)
+LeoEnterVT(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
     LeoPtr pLeo = GET_LEO_FROM_SCRN(pScrn);
 
     pLeo->vtSema = FALSE;
@@ -603,9 +602,8 @@ LeoEnterVT(VT_FUNC_ARGS_DECL)
 
 /* Mandatory */
 static void
-LeoLeaveVT(VT_FUNC_ARGS_DECL)
+LeoLeaveVT(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
     LeoPtr pLeo = GET_LEO_FROM_SCRN(pScrn);
 
     LeoVtChange (pScrn->pScreen, FALSE);
@@ -620,7 +618,7 @@ LeoLeaveVT(VT_FUNC_ARGS_DECL)
 
 /* Mandatory */
 static Bool
-LeoCloseScreen(CLOSE_SCREEN_ARGS_DECL)
+LeoCloseScreen(ScreenPtr pScreen)
 {
     ScrnInfoPtr pScrn = xf86ScreenToScrn(pScreen);
     LeoPtr pLeo = GET_LEO_FROM_SCRN(pScrn);
@@ -632,7 +630,7 @@ LeoCloseScreen(CLOSE_SCREEN_ARGS_DECL)
 	xf86SbusHideOsHwCursor (pLeo->psdp);
 
     pScreen->CloseScreen = pLeo->CloseScreen;
-    return (*pScreen->CloseScreen)(CLOSE_SCREEN_ARGS);
+    return (*pScreen->CloseScreen)(pScreen);
     return FALSE;
 }
 
@@ -641,9 +639,8 @@ LeoCloseScreen(CLOSE_SCREEN_ARGS_DECL)
 
 /* Optional */
 static void
-LeoFreeScreen(FREE_SCREEN_ARGS_DECL)
+LeoFreeScreen(ScrnInfoPtr pScrn)
 {
-    SCRN_INFO_PTR(arg);
     LeoFreeRec(pScrn);
 }
 
@@ -652,7 +649,7 @@ LeoFreeScreen(FREE_SCREEN_ARGS_DECL)
 
 /* Optional */
 static ModeStatus
-LeoValidMode(SCRN_ARG_TYPE arg, DisplayModePtr mode, Bool verbose, int flags)
+LeoValidMode(ScrnInfoPtr arg, DisplayModePtr mode, Bool verbose, int flags)
 {
     if (mode->Flags & V_INTERLACE)
 	return(MODE_BAD);
