@@ -32,7 +32,6 @@
 #include "leo_regs.h"
 #include "xf86sbusBus.h"
 
-#include "compat-api.h"
 /* Various offsets in virtual (ie. mmap()) spaces Linux and Solaris support. */
 #define LEO_FB0_VOFF		0x00000000
 #define LEO_LC0_VOFF		0x00800000
