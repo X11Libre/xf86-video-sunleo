@@ -112,8 +112,8 @@ static XF86ModuleVersionInfo sunleoVersRec =
 
 _X_EXPORT XF86ModuleData sunleoModuleData = { &sunleoVersRec, leoSetup, NULL };
 
-pointer
-leoSetup(pointer module, pointer opts, int *errmaj, int *errmin)
+void *
+leoSetup(void *module, void *opts, int *errmaj, int *errmin)
 {
     static Bool setupDone = FALSE;
 
@@ -130,7 +130,7 @@ leoSetup(pointer module, pointer opts, int *errmaj, int *errmin)
 	 * The return value must be non-NULL on success even though there
 	 * is no TearDownProc.
 	 */
-	return (pointer)TRUE;
+	return (void*)TRUE;
     } else {
 	if (errmaj) *errmaj = LDR_ONCEONLY;
 	return NULL;
