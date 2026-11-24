@@ -62,6 +62,7 @@ void LeoSync(ScrnInfoPtr pScrn);
 #define LEO_MAJOR_VERSION PACKAGE_VERSION_MAJOR
 #define LEO_MINOR_VERSION PACKAGE_VERSION_MINOR
 #define LEO_PATCHLEVEL PACKAGE_VERSION_PATCHLEVEL
+#define LEO_VERSION_SUFFIX PACKAGE_VERSION_SUFFIX
 
 /*
  * This contains the functions needed by the server after loading the driver
@@ -111,6 +112,9 @@ static XF86ModuleVersionInfo sunleoVersRec =
 };
 
 _X_EXPORT XF86ModuleData sunleoModuleData = { &sunleoVersRec, leoSetup, NULL };
+#ifdef XF86_MODULE_VERSION_SUFFIX
+XF86_MODULE_VERSION_SUFFIX(sunleo, LEO_VERSION_SUFFIX);
+#endif
 
 void *
 leoSetup(void *module, void *opts, int *errmaj, int *errmin)
